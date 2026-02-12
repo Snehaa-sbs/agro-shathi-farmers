@@ -6,6 +6,8 @@ interface I18nContextType {
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
+  isFirstLaunch: boolean;
+  setFirstLaunchDone: () => void;
 }
 
 const translations: Record<string, Record<Language, string>> = {
@@ -21,6 +23,8 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.settings': { en: 'Settings', bn: 'সেটিংস' },
   'nav.alerts': { en: 'Alerts', bn: 'সতর্কতা' },
   'nav.irrigation': { en: 'Irrigation', bn: 'সেচ' },
+  'nav.chatbot': { en: 'AI Chat', bn: 'এআই চ্যাট' },
+  'nav.calendar': { en: 'Calendar', bn: 'ক্যালেন্ডার' },
 
   // Dashboard
   'dashboard.greeting': { en: 'Good Morning, Farmer!', bn: 'সুপ্রভাত, কৃষক!' },
@@ -31,6 +35,8 @@ const translations: Record<string, Record<Language, string>> = {
   'dashboard.tasks': { en: "Today's Tasks", bn: 'আজকের কাজ' },
   'dashboard.voice.hint': { en: 'Tap mic to ask anything', bn: 'যেকোনো কিছু জিজ্ঞাসা করতে মাইকে ট্যাপ করুন' },
   'dashboard.listen': { en: 'Listen to Summary', bn: 'সারাংশ শুনুন' },
+  'dashboard.market': { en: 'Market Prices', bn: 'বাজার দর' },
+  'dashboard.perkg': { en: '/kg', bn: '/কেজি' },
 
   // Weather
   'weather.title': { en: 'Weather Forecast', bn: 'আবহাওয়ার পূর্বাভাস' },
@@ -56,6 +62,7 @@ const translations: Record<string, Record<Language, string>> = {
   'sensors.offline': { en: 'Offline', bn: 'অফলাইন' },
   'sensors.lastUpdate': { en: 'Last updated', bn: 'সর্বশেষ আপডেট' },
   'sensors.minutes.ago': { en: 'min ago', bn: 'মিনিট আগে' },
+  'sensors.history': { en: '7-Day Trends', bn: '৭ দিনের প্রবণতা' },
 
   // Irrigation
   'irrigation.title': { en: 'Irrigation Calculator', bn: 'সেচ ক্যালকুলেটর' },
@@ -102,6 +109,22 @@ const translations: Record<string, Record<Language, string>> = {
   'settings.profile': { en: 'Farmer Profile', bn: 'কৃষক প্রোফাইল' },
   'settings.about': { en: 'About', bn: 'সম্পর্কে' },
 
+  // Chatbot
+  'chatbot.title': { en: 'AI Farming Assistant', bn: 'এআই কৃষি সহকারী' },
+  'chatbot.placeholder': { en: 'Ask about farming...', bn: 'চাষ সম্পর্কে জিজ্ঞাসা করুন...' },
+  'chatbot.welcome': { en: 'Hello! I\'m your AI farming assistant. Ask me anything about crops, weather, irrigation, or diseases.', bn: 'হ্যালো! আমি আপনার এআই কৃষি সহকারী। ফসল, আবহাওয়া, সেচ বা রোগ সম্পর্কে যেকোনো কিছু জিজ্ঞাসা করুন।' },
+
+  // Calendar
+  'calendar.title': { en: 'Harvest Calendar', bn: 'ফসলের ক্যালেন্ডার' },
+  'calendar.plant': { en: 'Plant', bn: 'রোপণ' },
+  'calendar.harvest': { en: 'Harvest', bn: 'কাটা' },
+  'calendar.current': { en: 'Current Month', bn: 'এই মাস' },
+
+  // First Launch
+  'launch.welcome': { en: 'Welcome to', bn: 'স্বাগতম' },
+  'launch.choose': { en: 'Choose your language', bn: 'আপনার ভাষা নির্বাচন করুন' },
+  'launch.start': { en: 'Get Started', bn: 'শুরু করুন' },
+
   // Common
   'common.today': { en: 'Today', bn: 'আজ' },
   'common.ok': { en: 'OK', bn: 'ঠিক আছে' },
@@ -111,6 +134,7 @@ const translations: Record<string, Record<Language, string>> = {
   'common.high': { en: 'High', bn: 'বেশি' },
   'common.good': { en: 'Good', bn: 'ভালো' },
   'common.active': { en: 'Active', bn: 'সক্রিয়' },
+  'common.send': { en: 'Send', bn: 'পাঠান' },
 };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
@@ -119,10 +143,18 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [lang, setLang] = useState<Language>(() => {
     return (localStorage.getItem('agrosmart-lang') as Language) || 'en';
   });
+  const [isFirstLaunch, setIsFirstLaunch] = useState(() => {
+    return !localStorage.getItem('agrosmart-launched');
+  });
 
   const handleSetLang = useCallback((newLang: Language) => {
     setLang(newLang);
     localStorage.setItem('agrosmart-lang', newLang);
+  }, []);
+
+  const setFirstLaunchDone = useCallback(() => {
+    setIsFirstLaunch(false);
+    localStorage.setItem('agrosmart-launched', 'true');
   }, []);
 
   const t = useCallback((key: string): string => {
@@ -130,7 +162,7 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [lang]);
 
   return (
-    <I18nContext.Provider value={{ lang, setLang: handleSetLang, t }}>
+    <I18nContext.Provider value={{ lang, setLang: handleSetLang, t, isFirstLaunch, setFirstLaunchDone }}>
       {children}
     </I18nContext.Provider>
   );
