@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, CloudSun, Cpu, Sprout, Settings } from 'lucide-react';
+import { Home, CloudSun, Cpu, Sprout, Settings, MessageCircle, Calendar } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 
@@ -11,8 +11,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const tabs = [
     { path: '/', icon: Home, label: 'nav.dashboard' },
     { path: '/weather', icon: CloudSun, label: 'nav.weather' },
-    { path: '/sensors', icon: Cpu, label: 'nav.sensors' },
-    { path: '/crops', icon: Sprout, label: 'nav.crops' },
+    { path: '/chatbot', icon: MessageCircle, label: 'nav.chatbot' },
+    { path: '/calendar', icon: Calendar, label: 'nav.calendar' },
     { path: '/settings', icon: Settings, label: 'nav.settings' },
   ];
 
@@ -41,9 +41,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   />
                 )}
                 <tab.icon
-                  className={`w-6 h-6 transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}
+                  className={`w-5 h-5 transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}
                 />
-                <span className={`text-[10px] font-semibold transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
+                <span className={`text-[9px] font-semibold transition-colors ${isActive ? 'text-primary' : 'text-muted-foreground'}`}>
                   {t(tab.label)}
                 </span>
               </Link>
