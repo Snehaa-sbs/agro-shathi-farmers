@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useI18n } from '@/lib/i18n';
+import { speakText } from '@/lib/speech';
 import { motion } from 'framer-motion';
 import { Send, Bot, User, Volume2 } from 'lucide-react';
 
@@ -53,13 +54,7 @@ const Chatbot: React.FC = () => {
   };
 
   const handleSpeak = (text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-    }
+    speakText(text, lang);
   };
 
   return (

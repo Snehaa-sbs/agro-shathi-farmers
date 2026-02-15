@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '@/lib/i18n';
+import { speakText } from '@/lib/speech';
 import { motion } from 'framer-motion';
 import {
   CloudSun, Droplets, Sprout, AlertTriangle, Volume2,
@@ -31,16 +32,10 @@ const Dashboard: React.FC = () => {
   const { t, lang } = useI18n();
 
   const handleListenSummary = () => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const summary = lang === 'bn'
-        ? 'সুপ্রভাত! আজ তাপমাত্রা ৩২ ডিগ্রি সেলসিয়াস, আর্দ্রতা ৭৮%। মাটির আর্দ্রতা ৬৫%। আজ প্রতি শতাংশে ১৫ লিটার পানি দিতে হবে। ব্লাস্ট রোগের সতর্কতা জারি আছে।'
-        : 'Good morning! Today temperature is 32 degrees Celsius, humidity 78%. Soil moisture is 65%. You need to irrigate 15 liters per decimal today. Blast disease alert is active.';
-      const utterance = new SpeechSynthesisUtterance(summary);
-      utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-    }
+    const summary = lang === 'bn'
+      ? 'সুপ্রভাত! আজ তাপমাত্রা ৩২ ডিগ্রি সেলসিয়াস, আর্দ্রতা ৭৮%। মাটির আর্দ্রতা ৬৫%। আজ প্রতি শতাংশে ১৫ লিটার পানি দিতে হবে। ব্লাস্ট রোগের সতর্কতা জারি আছে।'
+      : 'Good morning! Today temperature is 32 degrees Celsius, humidity 78%. Soil moisture is 65%. You need to irrigate 15 liters per decimal today. Blast disease alert is active.';
+    speakText(summary, lang);
   };
 
   const quickStats = [

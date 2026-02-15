@@ -1,25 +1,8 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Mic, X, Volume2, StopCircle } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
+import { speakText, stopSpeaking } from '@/lib/speech';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const useSpeechSynthesis = () => {
-  const speak = useCallback((text: string, lang: string) => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'bn' ? 'bn-BD' : 'en-US';
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-    window.speechSynthesis.speak(utterance);
-  }, []);
-
-  const stop = useCallback(() => {
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-  }, []);
-
-  return { speak, stop };
-};
 
 const useSpeechRecognition = () => {
   const recognitionRef = useRef<any>(null);
@@ -76,7 +59,6 @@ const VoiceAssistant: React.FC = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [userQuery, setUserQuery] = useState('');
   const [response, setResponse] = useState('');
-  const { speak, stop } = useSpeechSynthesis();
   const { startListening, stopListening } = useSpeechRecognition();
 
   const handleMicPress = () => {
@@ -99,10 +81,8 @@ const VoiceAssistant: React.FC = () => {
         setUserQuery(text);
         const aiResp = getAIResponse(text, lang);
         setResponse(aiResp);
-        speak(aiResp, lang);
         setIsSpeaking(true);
-        // Auto-stop speaking state after a delay
-        setTimeout(() => setIsSpeaking(false), 5000);
+        speakText(aiResp, lang).then(() => setIsSpeaking(false));
       },
       () => setIsListening(false)
     );
@@ -110,9 +90,8 @@ const VoiceAssistant: React.FC = () => {
 
   const handlePlayResponse = () => {
     if (response) {
-      speak(response, lang);
       setIsSpeaking(true);
-      setTimeout(() => setIsSpeaking(false), 5000);
+      speakText(response, lang).then(() => setIsSpeaking(false));
     }
   };
 
@@ -120,7 +99,7 @@ const VoiceAssistant: React.FC = () => {
     setIsOpen(false);
     setResponse('');
     setUserQuery('');
-    stop();
+    stopSpeaking();
     stopListening();
     setIsListening(false);
     setIsSpeaking(false);
