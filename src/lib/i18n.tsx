@@ -25,6 +25,42 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.irrigation': { en: 'Irrigation', bn: 'সেচ' },
   'nav.chatbot': { en: 'AI Chat', bn: 'এআই চ্যাট' },
   'nav.calendar': { en: 'Calendar', bn: 'ক্যালেন্ডার' },
+  'nav.scanner': { en: 'Scanner', bn: 'স্ক্যানার' },
+  'nav.market': { en: 'Market', bn: 'বাজার' },
+  'nav.soil': { en: 'Soil', bn: 'মাটি' },
+
+  // Disease Scanner
+  'scanner.title': { en: 'Pest & Disease Scanner', bn: 'পোকা ও রোগ স্ক্যানার' },
+  'scanner.subtitle': { en: 'Upload a photo of your crop to identify diseases', bn: 'রোগ চিহ্নিত করতে ফসলের ছবি আপলোড করুন' },
+  'scanner.upload': { en: 'Take Photo or Upload Image', bn: 'ছবি তুলুন বা আপলোড করুন' },
+  'scanner.uploadHint': { en: 'Tap to capture or select from gallery', bn: 'ক্যামেরা বা গ্যালারি থেকে নির্বাচন করুন' },
+  'scanner.change': { en: 'Change', bn: 'পরিবর্তন' },
+  'scanner.analyze': { en: 'Analyze', bn: 'বিশ্লেষণ' },
+  'scanner.analyzing': { en: 'Analyzing...', bn: 'বিশ্লেষণ হচ্ছে...' },
+  'scanner.confidence': { en: 'Confidence', bn: 'নির্ভুলতা' },
+  'scanner.treatment': { en: 'Treatment', bn: 'চিকিৎসা' },
+  'scanner.prevention': { en: 'Prevention', bn: 'প্রতিরোধ' },
+
+  // Market Prices
+  'market.title': { en: 'Market Prices', bn: 'বাজার দর' },
+  'market.subtitle': { en: 'Live crop prices from your region', bn: 'আপনার অঞ্চলের ফসলের দাম' },
+
+  // Soil Health
+  'soil.title': { en: 'Soil Health Report', bn: 'মাটি স্বাস্থ্য রিপোর্ট' },
+  'soil.subtitle': { en: 'Enter soil test results for recommendations', bn: 'সুপারিশের জন্য মাটি পরীক্ষার ফলাফল দিন' },
+  'soil.inputTitle': { en: 'Enter Soil Test Results', bn: 'মাটি পরীক্ষার ফলাফল লিখুন' },
+  'soil.ph': { en: 'Soil pH', bn: 'মাটির pH' },
+  'soil.organic': { en: 'Organic Matter %', bn: 'জৈব পদার্থ %' },
+  'soil.nitrogen': { en: 'Nitrogen', bn: 'নাইট্রোজেন' },
+  'soil.phosphorus': { en: 'Phosphorus', bn: 'ফসফরাস' },
+  'soil.potassium': { en: 'Potassium', bn: 'পটাশিয়াম' },
+  'soil.crop': { en: 'Target Crop', bn: 'লক্ষ্য ফসল' },
+  'soil.analyze': { en: 'Analyze Soil', bn: 'মাটি বিশ্লেষণ করুন' },
+  'soil.analyzing': { en: 'Analyzing...', bn: 'বিশ্লেষণ হচ্ছে...' },
+  'soil.overallHealth': { en: 'Overall Soil Health', bn: 'সামগ্রিক মাটির স্বাস্থ্য' },
+  'soil.nutrients': { en: 'Nutrient Status', bn: 'পুষ্টি অবস্থা' },
+  'soil.fertilizerPlan': { en: 'Fertilizer Plan', bn: 'সার পরিকল্পনা' },
+  'soil.tips': { en: 'Tips', bn: 'পরামর্শ' },
 
   // Dashboard
   'dashboard.greeting': { en: 'Good Morning, Farmer!', bn: 'সুপ্রভাত, কৃষক!' },
