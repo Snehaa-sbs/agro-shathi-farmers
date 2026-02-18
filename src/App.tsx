@@ -16,6 +16,9 @@ import Alerts from "./pages/Alerts";
 import Settings from "./pages/Settings";
 import Chatbot from "./pages/Chatbot";
 import HarvestCalendar from "./pages/HarvestCalendar";
+import DiseaseScanner from "./pages/DiseaseScanner";
+import MarketPrices from "./pages/MarketPrices";
+import SoilHealth from "./pages/SoilHealth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +43,9 @@ const AppContent = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/calendar" element={<HarvestCalendar />} />
+          <Route path="/disease-scanner" element={<DiseaseScanner />} />
+          <Route path="/market-prices" element={<MarketPrices />} />
+          <Route path="/soil-health" element={<SoilHealth />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

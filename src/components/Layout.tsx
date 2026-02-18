@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, CloudSun, Cpu, Sprout, Settings, MessageCircle, Calendar } from 'lucide-react';
+import { Home, CloudSun, Bug, Store, Beaker, Settings, MessageCircle } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 
@@ -10,9 +10,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const tabs = [
     { path: '/', icon: Home, label: 'nav.dashboard' },
-    { path: '/weather', icon: CloudSun, label: 'nav.weather' },
-    { path: '/chatbot', icon: MessageCircle, label: 'nav.chatbot' },
-    { path: '/calendar', icon: Calendar, label: 'nav.calendar' },
+    { path: '/disease-scanner', icon: Bug, label: 'nav.scanner' },
+    { path: '/market-prices', icon: Store, label: 'nav.market' },
+    { path: '/soil-health', icon: Beaker, label: 'nav.soil' },
     { path: '/settings', icon: Settings, label: 'nav.settings' },
   ];
 
