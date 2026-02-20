@@ -1,10 +1,13 @@
 import React from 'react';
 import { useI18n } from '@/lib/i18n';
+import { useTheme } from '@/hooks/useTheme';
 import { motion } from 'framer-motion';
-import { Globe, Bell, Volume2, WifiOff, User, Info } from 'lucide-react';
+import { Globe, Bell, Volume2, WifiOff, User, Info, Moon, Sun } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 
 const Settings: React.FC = () => {
   const { t, lang, setLang } = useI18n();
+  const { resolvedTheme, setTheme } = useTheme();
 
   const settingItems = [
     { icon: Bell, label: t('settings.notifications'), toggle: true, defaultOn: true },
@@ -46,6 +49,29 @@ const Settings: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Dark Mode Toggle */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="flex items-center justify-between p-4 rounded-2xl bg-card border border-border shadow-card mb-4"
+      >
+        <div className="flex items-center gap-3">
+          {resolvedTheme === 'dark' ? (
+            <Moon className="w-5 h-5 text-primary" />
+          ) : (
+            <Sun className="w-5 h-5 text-primary" />
+          )}
+          <span className="font-bold text-foreground text-sm">
+            {lang === 'bn' ? 'ডার্ক মোড' : 'Dark Mode'}
+          </span>
+        </div>
+        <Switch
+          checked={resolvedTheme === 'dark'}
+          onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+        />
+      </motion.div>
+
       {/* Toggle Settings */}
       <div className="space-y-2 mb-6">
         {settingItems.map((item, i) => (
@@ -60,10 +86,7 @@ const Settings: React.FC = () => {
               <item.icon className="w-5 h-5 text-primary" />
               <span className="font-semibold text-foreground text-sm">{item.label}</span>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" defaultChecked={item.defaultOn} className="sr-only peer" />
-              <div className="w-11 h-6 bg-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-primary-foreground after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-primary-foreground after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
-            </label>
+            <Switch defaultChecked={item.defaultOn} />
           </motion.div>
         ))}
       </div>
