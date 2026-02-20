@@ -1,13 +1,17 @@
 import React from 'react';
 import { useI18n } from '@/lib/i18n';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuth } from '@/hooks/useAuth';
 import { motion } from 'framer-motion';
-import { Globe, Bell, Volume2, WifiOff, User, Info, Moon, Sun } from 'lucide-react';
+import { Globe, Bell, Volume2, WifiOff, User, Info, Moon, Sun, LogOut } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
+import { useNavigate } from 'react-router-dom';
 
 const Settings: React.FC = () => {
   const { t, lang, setLang } = useI18n();
   const { resolvedTheme, setTheme } = useTheme();
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
 
   const settingItems = [
     { icon: Bell, label: t('settings.notifications'), toggle: true, defaultOn: true },
@@ -110,6 +114,21 @@ const Settings: React.FC = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Sign Out */}
+      <motion.button
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        onClick={async () => {
+          await signOut();
+          navigate('/sign-in');
+        }}
+        className="w-full flex items-center justify-center gap-2 p-4 rounded-2xl bg-destructive text-destructive-foreground font-bold text-sm shadow-card mb-4"
+      >
+        <LogOut className="w-5 h-5" />
+        {lang === 'bn' ? 'সাইন আউট' : 'Sign Out'}
+      </motion.button>
 
       <motion.div
         initial={{ opacity: 0 }}
